@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$KUFF | Melonstine & The Book of the Wall</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cinzel:wght@600;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --accent-green: #2ecc71;
+            --bright-green: #00ff66;
+            --melon-red: #ff3344;
+            --gold-accent: #f39c12;
+            --blue-dog-glow: #1a4d8c;
+            --bg-dark: #070a12;
+            --bg-card: #0d1322;
+            --bg-card-hover: #151d33;
+            --text-light: #d1d8e0;
+            --text-white: #ffffff;
+            --border-dark: #1b263b;
+        }
+
+        /* Cosmic Background & Scanline Base */
+        body {
+            margin: 0;
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--text-light);
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(26, 77, 140, 0.25) 0%, transparent 60%),
+                radial-gradient(circle at 80% 50%, rgba(46, 204, 113, 0.1) 0%, transparent 40%);
+            background-attachment: fixed;
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, .heading-font {
+            font-family: 'Anton', sans-serif;
+            letter-spacing: 1.5px;
+        }
+
+        .lore-title {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 2px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: rgba(7, 10, 18, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid rgba(46, 204, 113, 0.3);
+            padding: 0.8rem 0;
+        }
+        .navbar-brand {
+            font-family: 'Anton', sans-serif;
+            font-size: 2.2rem;
+            color: var(--text-white) !important;
+            text-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+        }
+        .navbar-brand span {
+            color: var(--accent-green);
+        }
+        .nav-link {
+            color: var(--text-light) !important;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin: 0 8px;
+            transition: 0.3s;
+        }
+        .nav-link:hover { 
+            color: var(--bright-green) !important; 
+            text-shadow: 0 0 8px var(--bright-green); 
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 130px 20px 60px;
+            position: relative;
+        }
+
+        .main-title {
+            font-size: clamp(3.5rem, 8vw, 7.5rem);
+            color: var(--text-white);
+            text-transform: uppercase;
+            margin-bottom: 0;
+            line-height: 1;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 15px rgba(46, 204, 113, 0.4);
+        }
+
+        .sub-title {
+            font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+            color: var(--bright-green);
+            margin-top: 15px;
+            margin-bottom: 25px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .hero-img-container {
+            position: relative;
+            margin: 20px 0 30px;
+            max-width: 450px;
+            width: 100%;
+        }
+        .hero-art {
+            width: 100%;
+            border-radius: 16px;
+            border: 3px solid var(--accent-green);
+            box-shadow: 0 0 30px rgba(46, 204, 113, 0.3), 0 0 50px rgba(26, 77, 140, 0.4);
+            transition: transform 0.4s ease;
+        }
+        .hero-art:hover {
+            transform: scale(1.02);
+        }
+
+        /* Countdown Container */
+        .countdown-box {
+            background: rgba(13, 19, 34, 0.85);
+            border: 2px solid var(--gold-accent);
+            border-radius: 12px;
+            padding: 20px 30px;
+            margin: 20px 0 30px;
+            box-shadow: 0 0 25px rgba(243, 156, 18, 0.25);
+            max-width: 650px;
+            width: 100%;
+        }
+        .countdown-title {
+            color: var(--gold-accent);
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+        .timer-unit {
+            display: inline-block;
+            min-width: 75px;
+            padding: 10px;
+            background: rgba(7, 10, 18, 0.8);
+            border-radius: 8px;
+            border: 1px solid rgba(243, 156, 18, 0.4);
+            margin: 0 5px;
+        }
+        .timer-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-white);
+            line-height: 1;
+        }
+        .timer-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        /* Buttons */
+        .btn-group-custom {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .cta-btn {
+            background: var(--bg-card);
+            color: var(--text-white);
+            padding: 14px 32px;
+            border-radius: 8px;
+            border: 2px solid var(--accent-green);
+            font-family: 'Anton', sans-serif;
+            font-size: 1.3rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: 0.3s all ease;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+        .cta-btn.primary {
+            background: var(--accent-green);
+            color: #000;
+            border-color: var(--bright-green);
+        }
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            background: var(--bright-green);
+            color: #000;
+            border-color: var(--bright-green);
+            box-shadow: 0 0 25px rgba(0, 255, 102, 0.5);
+        }
+
+        /* Headings */
+        .section-heading {
+            font-size: 3.2rem;
+            color: var(--text-white);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
+        }
+
+        /* Lore Cards & Blockquotes */
+        .lore-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-dark);
+            border-radius: 12px;
+            padding: 30px;
+            height: 100%;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .lore-card:hover {
+            border-color: var(--accent-green);
+            background: var(--bg-card-hover);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .prophecy-quote {
+            background: rgba(26, 77, 140, 0.2);
+            border-left: 4px solid var(--gold-accent);
+            padding: 20px 25px;
+            border-radius: 0 8px 8px 0;
+            font-family: 'Cinzel', serif;
+            font-size: 1.15rem;
+            color: var(--text-white);
+            margin: 25px 0;
+            font-style: italic;
+        }
+
+        /* Army Hierarchy Badges */
+        .rank-badge {
+            display: inline-block;
+            background: rgba(46, 204, 113, 0.15);
+            border: 1px solid var(--accent-green);
+            color: var(--bright-green);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        /* Gallery Grid */
+        .gallery-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--border-dark);
+            transition: 0.3s;
+            background: #000;
+        }
+        .gallery-item:hover {
+            transform: scale(1.03);
+            border-color: var(--bright-green);
+            box-shadow: 0 0 25px rgba(0, 255, 102, 0.3);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Sayings Box */
+        .saying-card {
+            background: rgba(13, 19, 34, 0.6);
+            border-left: 4px solid var(--melon-red);
+            padding: 18px 20px;
+            margin-bottom: 15px;
+            border-radius: 0 8px 8px 0;
+            font-weight: 600;
+        }
+
+        footer {
+            padding: 60px 0;
+            border-top: 1px solid var(--border-dark);
+            text-align: center;
+            background-color: #04060b;
+        }
+        .social-link {
+            font-size: 2.2rem;
+            color: var(--text-white);
+            margin: 0 15px;
+            transition: 0.3s;
+            display: inline-block;
+        }
+        .social-link:hover { 
+            color: var(--bright-green); 
+            transform: translateY(-4px) scale(1.1); 
+            filter: drop-shadow(0 0 10px var(--bright-green));
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand { font-size: 1.8rem; }
+            .section-heading { font-size: 2.3rem; }
+            .btn-group-custom { flex-direction: column; width: 100%; }
+            .cta-btn { width: 100%; text-align: center; }
+            .timer-unit { min-width: 60px; padding: 8px 4px; }
+            .timer-number { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">$KUFF <span>MELONSTINE</span></a>
+            <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#kuffNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="kuffNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#countdown">Launch</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#origin">The Wall</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#prophecy">Prophecy</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#army">Melon Army</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#archives">Archives</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#socials">Community</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <h1 class="main-title">PLANT THE SEED.<br>GROW THE DREAM.</h1>
+        <p class="sub-title">The Book of the Wall &bull; A Legend of Freedom & Courage</p>
+        
+        <div class="hero-img-container">
+            <img src="photo_2026-10-10_12-04-00.jpg" class="hero-art" alt="Kuff atop the Wall looking at the Moon">
+        </div>
+
+        <!-- Countdown Section -->
+        <div class="countdown-box" id="countdown">
+            <div class="countdown-title"><i class="fas fa-rocket me-2"></i> The Awakening Countdown</div>
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="timer-unit">
+                    <div class="timer-number" id="days">00</div>
+                    <div class="timer-label">Days</div>
+                </div>
+                <div class="timer-unit">
+                    <div class="timer-number" id="hours">00</div>
+                    <div class="timer-label">Hours</div>
+                </div>
+                <div class="timer-unit">
+                    <div class="timer-number" id="minutes">00</div>
+                    <div class="timer-label">Mins</div>
+                </div>
+                <div class="timer-unit">
+                    <div class="timer-number" id="seconds">00</div>
+                    <div class="timer-label">Secs</div>
+                </div>
+            </div>
+            <div class="mt-2 text-secondary style-italic" style="font-size: 0.85rem;">Target: October 26, 2026 - 3:00 PM UTC</div>
+        </div>
+        
+        <div class="btn-group-custom">
+            <a href="https://t.me/kuffmelonstine" class="cta-btn primary" target="_blank"><i class="fab fa-telegram me-2"></i>JOIN TELEGRAM</a>
+            <a href="https://x.com/kuffmelonstine" class="cta-btn" target="_blank"><i class="fab fa-twitter me-2"></i>FOLLOW ON X</a>
+        </div>
+    </section>
+
+    <!-- Origin of the Wall -->
+    <section class="container py-5" id="origin">
+        <div class="text-center mb-5">
+            <h2 class="section-heading">THE ORIGIN OF THE WALL</h2>
+            <p class="text-secondary fs-5">From thriving dreamers to prisoners of fear.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="lore-card">
+                    <h3 class="text-white mb-3"><i class="fas fa-star me-2 text-warning"></i>The Age of Exploration</h3>
+                    <p>The people of Melonstine were not always prisoners. Long before the Blue Dogs arrived, Melonstine was a thriving civilisation of dreamers, explorers and builders.</p>
+                    <p>The Melons studied the stars. They built observatories. They travelled far beyond the known lands, believing that every horizon was an invitation to discover more.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="lore-card">
+                    <h3 class="text-white mb-3"><i class="fas fa-shield-alt me-2 text-primary"></i>The Age of Fear & The Blue Dogs</h3>
+                    <p>A strange fear spread across the world. People began choosing safety over freedom, control over curiosity, and comfort over ambition.</p>
+                    <p>The Blue Dogs seized the opportunity. Convincing the rulers that the outside world was dangerous, they offered protection and peace. Thus, the Great Wall was built—a prison celebrated as a salvation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prophecy Section -->
+    <section class="py-5" id="prophecy" style="background: rgba(13, 19, 34, 0.4); border-top: 1px solid var(--border-dark); border-bottom: 1px solid var(--border-dark);">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <h2 class="section-heading mb-3">THE LOST PROPHECY</h2>
+                    <p class="lead text-light">The prophecy Kuff discovered was incomplete. A second fragment exists somewhere beyond the wall, long sought for destruction by the Blue Dogs.</p>
+
+                    <div class="prophecy-quote">
+                        "When the dream reaches the moon,<br>
+                        the wall shall no longer cast its shadow.<br>
+                        The forgotten shall remember.<br>
+                        The fearful shall awaken.<br>
+                        And fear shall lose its kingdom forever."
+                    </div>
+
+                    <h4 class="lore-title text-warning mt-4"><i class="fas fa-user-ninja me-2"></i>The First Climber</h4>
+                    <p>Ancient records speak of a hero older than any king or Blue Dog. All that survives is a carved symbol beneath the ancient observatory: <strong>a melon and a moon</strong>. Kuff is not merely creating a journey; Kuff is continuing one.</p>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <div class="gallery-item">
+                        <img src="photo_2026-10-10_12-04-05.jpg" alt="Kuff atop the Gate with Key and Coin">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Melon Army Ranks -->
+    <section class="container py-5" id="army">
+        <div class="text-center mb-5">
+            <h2 class="section-heading">THE MELON ARMY</h2>
+            <p class="text-secondary fs-5">Not soldiers, but believers, dreamers, and builders.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="lore-card">
+                    <div class="rank-badge">RANK 1</div>
+                    <h3 class="text-white">Seedlings</h3>
+                    <p>New believers beginning their journey and embracing the vision of Melonstine.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="lore-card">
+                    <div class="rank-badge">RANK 2</div>
+                    <h3 class="text-white">Growers</h3>
+                    <p>Active members helping the dream spread across communities far and wide.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="lore-card">
+                    <div class="rank-badge">RANK 3</div>
+                    <h3 class="text-white">Climbers</h3>
+                    <p>Those brave enough to challenge fear and scale the heights of the Great Wall.</p>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="lore-card">
+                    <div class="rank-badge">RANK 4</div>
+                    <h3 class="text-white">Dream Bearers</h3>
+                    <p>Trusted warriors dedicated to protecting and carrying forward the mission.</p>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="lore-card">
+                    <div class="rank-badge">RANK 5</div>
+                    <h3 class="text-white">Moonkeepers</h3>
+                    <p>The legendary few who guide the future of Melonstine beyond the reach of walls.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5 text-center p-4 lore-card" style="border-color: var(--gold-accent);">
+            <h3 class="lore-title text-warning"><i class="fas fa-eye me-2"></i>The Eye Beyond the Moon</h3>
+            <p class="mb-0">Beyond the moon lies <strong>The First Dream</strong>—a mysterious light older than Melonstine itself. Even the Blue Dogs fear it, yet ancient texts reveal it is intricately tied to Kuff's true destiny.</p>
+        </div>
+    </section>
+
+    <!-- Archives / Gallery -->
+    <section class="container py-5" id="archives">
+        <h2 class="text-center mb-5 section-heading">VISUAL ARCHIVES</h2>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-4">
+                <div class="gallery-item">
+                    <img src="photo_2026-10-10_12-03-52.jpg" alt="The Melon Army Assembled">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="gallery-item">
+                    <img src="photo_2026-10-10_12-04-00.jpg" alt="Kuff Watching the Horizon">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="gallery-item">
+                    <img src="photo_2026-10-10_12-04-05.jpg" alt="Key to Freedom at the Observatory Gate">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sayings Section -->
+    <section class="container py-5">
+        <h2 class="text-center mb-5 section-heading">WORDS OF THE CLIMBER</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="saying-card">
+                    "They said there was nothing beyond the wall. Kuff climbed it anyway."
+                </div>
+                <div class="saying-card">
+                    "The Blue Dogs feared what was beyond the wall. The Melons feared the wall itself. Kuff feared neither."
+                </div>
+                <div class="saying-card">
+                    "We were not born to live beneath walls. We were born to build beyond them."
+                </div>
+                <div class="saying-card">
+                    "The wall imprisoned our bodies. Fear imprisoned our dreams. Today we leave both behind."
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Socials -->
+    <footer id="socials">
+        <div class="container">
+            <h2 class="section-heading mb-3">JOIN THE MOVEMENT</h2>
+            <p class="lead text-secondary mb-4">We were born to build beyond walls.</p>
+            <div class="py-3">
+                <a href="https://x.com/kuffmelonstine" class="social-link" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://t.me/kuffmelonstine" class="social-link" target="_blank"><i class="fab fa-telegram"></i></a>
+            </div>
+            <p class="mt-4 text-muted" style="font-size: 0.9rem;">&copy; 2026 $KUFF MELONSTINE. ALL RIGHTS RESERVED. PLANT THE SEED. GROW THE DREAM.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Countdown Timer Script -->
+    <script>
+        // Set Target Date: October 26, 2026 15:00:00 UTC
+        const targetDate = new Date("2026-10-26T15:00:00Z").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+                document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+                document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+                document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+            } else {
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+            }
+        }
+
+        // Run immediately and update every second
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
